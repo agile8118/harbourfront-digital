@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harbourfront Digital — Toronto</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header id="header">
+    <div class="container header-inner">
+      <a href="#" class="logo">Harbourfront<span>Digital</span></a>
+      <nav>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#work">Our Work</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+      <div class="container hero-content">
+        <p class="eyebrow">Toronto, Canada</p>
+        <h1>We build digital <br><em>experiences</em> that convert.</h1>
+        <p class="hero-sub">Strategy, design, and development for ambitious brands across the GTA and beyond.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">Start a Project</a>
+          <a href="#services" class="btn btn-ghost">See Our Work</a>
+        </div>
+      </div>
+      <div class="hero-bg"></div>
+    </section>
+
+    <!-- Services -->
+    <section class="services" id="services">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">What We Do</p>
+          <h2>Full-stack digital services</h2>
+        </div>
+        <div class="cards" id="serviceCards">
+          <div class="card" data-index="0">
+            <div class="card-icon">01</div>
+            <h3>Brand Strategy</h3>
+            <p>We shape positioning, messaging, and visual identity that sets you apart in competitive markets.</p>
+          </div>
+          <div class="card" data-index="1">
+            <div class="card-icon">02</div>
+            <h3>Web Design & Dev</h3>
+            <p>Pixel-perfect, fast, accessible websites built with clean code and designed for growth.</p>
+          </div>
+          <div class="card" data-index="2">
+            <div class="card-icon">03</div>
+            <h3>Digital Marketing</h3>
+            <p>SEO, paid media, and content strategies that drive qualified traffic and measurable ROI.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work / Stats -->
+    <section class="work" id="work">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Our Impact</p>
+          <h2>Numbers that speak</h2>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-num" data-target="120">0</span><span class="stat-suffix">+</span>
+            <p>Projects Delivered</p>
+          </div>
+          <div class="stat">
+            <span class="stat-num" data-target="98">0</span><span class="stat-suffix">%</span>
+            <p>Client Satisfaction</p>
+          </div>
+          <div class="stat">
+            <span class="stat-num" data-target="8">0</span><span class="stat-suffix"></span>
+            <p>Years in Toronto</p>
+          </div>
+          <div class="stat">
+            <span class="stat-num" data-target="40">0</span><span class="stat-suffix">+</span>
+            <p>Industry Awards</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter" id="newsletter">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Stay in the Loop</p>
+          <h2>Let's build something great</h2>
+          <p class="newsletter-desc">Get insights on digital strategy, design trends, and Toronto's tech scene — delivered to your inbox.</p>
+        </div>
+        <form id="newsletterForm" novalidate>
+          <div class="newsletter-row">
+            <input type="email" id="newsletterEmail" name="email" placeholder="your@email.com" />
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </div>
+          <span class="error" id="newsletterEmailError"></span>
+          <p class="form-success" id="newsletterSuccess">Check your inbox — click the link to confirm your subscription.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Get In Touch</p>
+          <h2>Start a conversation</h2>
+        </div>
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Jane Smith" />
+              <span class="error" id="nameError"></span>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="jane@company.com" />
+              <span class="error" id="emailError"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell us about your project..."></textarea>
+            <span class="error" id="messageError"></span>
+          </div>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+          <p class="form-success" id="formSuccess">Message sent! We'll be in touch shortly.</p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <a href="#" class="logo">Harbourfront<span>Digital</span></a>
+      <p class="footer-copy">© 2026 Harbourfront Digital Inc. · Toronto, ON</p>
+      <div class="footer-links">
+        <a href="#">LinkedIn</a>
+        <a href="#">Instagram</a>
+        <a href="#">Dribbble</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

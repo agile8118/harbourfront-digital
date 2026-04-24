@@ -1,0 +1,10 @@
+-- We will add triggers here.
+-- Example: updated_at auto-timestamp trigger function.
+--
+-- CREATE OR REPLACE FUNCTION set_updated_at()
+-- RETURNS TRIGGER AS $$
+-- BEGIN
+--   NEW.updated_at = NOW();
+--   RETURN NEW;
+-- END;
+-- $$ LANGUAGE plpgsql;
