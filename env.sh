@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Loads environment variables then executes the given command.
 #

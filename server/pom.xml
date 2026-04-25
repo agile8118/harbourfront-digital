@@ -69,6 +69,13 @@
       <artifactId>sesv2</artifactId>
     </dependency>
 
+    <!-- SCRAM-SHA-256 auth for Vert.x pg client (optional in vertx-pg-client, required for Postgres 14+) -->
+    <dependency>
+      <groupId>com.ongres.scram</groupId>
+      <artifactId>client</artifactId>
+      <version>2.1</version>
+    </dependency>
+
     <!-- PostgreSQL JDBC driver — used only by the seed script (Seed.java) -->
     <dependency>
       <groupId>org.postgresql</groupId>

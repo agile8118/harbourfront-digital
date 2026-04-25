@@ -23,7 +23,7 @@ public class SqsService {
         SqsAsyncClient c = null;
         try {
             c = SqsAsyncClient.builder()
-                .region(Region.of(System.getenv().getOrDefault("AWS_REGION", "ca-central-1")))
+                .region(Region.of(System.getenv().getOrDefault("AWS_REGION", "us-east-2")))
                 .build();
         } catch (Exception e) {
             Log.error("SQS client failed to initialize — notifications disabled: " + e.getMessage());

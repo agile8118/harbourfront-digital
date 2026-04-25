@@ -18,7 +18,7 @@ public class SesService {
         this.senderEmail = System.getenv().getOrDefault("SES_SENDER_EMAIL", "");
         this.appBaseUrl = System.getenv().getOrDefault("APP_BASE_URL", "");
         this.client = SesV2AsyncClient.builder()
-                .region(Region.of(System.getenv().get("AWS_REGION")))
+                .region(Region.of(System.getenv().getOrDefault("AWS_REGION", "us-east-2")))
                 .credentialsProvider(InstanceProfileCredentialsProvider.create())
                 .build();
     }
