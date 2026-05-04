@@ -1,6 +1,5 @@
 package com.harbourfront.handlers;
 
-
 import com.harbourfront.Log;
 import com.harbourfront.database.DB;
 import com.harbourfront.services.SesService;
@@ -33,28 +32,37 @@ public class NewsletterHandler {
         }
 
         db.insert("subscribers", new JsonObject().put("email", email))
-                .onSuccess(row -> {
-                    String token = row.getString("token");
-                    sesService.sendConfirmation(email, token)
-                            .onFailure(err -> Log.error(err));
+                .onSuccess(row -> handleInsertSuccess(ctx, row, email))
+                .onFailure(err -> handleInsertFailure(ctx, err));
+    }
 
-                    ctx.response()
-                            .setStatusCode(201)
-                            .putHeader("Content-Type", "application/json")
-                            .end(new JsonObject().put("ok", true).encode());
-                })
-                .onFailure(err -> {
-                    // unique violation: already subscribed, respond silently
-                    if (err.getMessage() != null && err.getMessage().contains("unique")) {
-                        ctx.response()
-                                .setStatusCode(200)
-                                .putHeader("Content-Type", "application/json")
-                                .end(new JsonObject().put("ok", true).encode());
-                    } else {
-                        Log.error(err);
-                        ctx.fail(500, err);
-                    }
-                });
+    private void handleInsertSuccess(RoutingContext ctx, JsonObject row, String email) {
+        String token = row.getString("token");
+        sesService.sendConfirmation(email, token)
+                .onSuccess(v -> sendSuccess(ctx, 200))
+                .onFailure(err -> sendError(ctx, err));
+    }
 
+    private void handleInsertFailure(RoutingContext ctx, Throwable err) {
+        if (err.getMessage() != null && err.getMessage().contains("unique")) {
+            // User already subscribed, but we don't want to leak that info, just respond
+            // with success
+            sendSuccess(ctx, 200);
+        } else {
+            Log.error(err);
+            ctx.fail(500, err);
+        }
+    }
+
+    private void sendSuccess(RoutingContext ctx, int statusCode) {
+        ctx.response()
+                .setStatusCode(statusCode)
+                .putHeader("Content-Type", "application/json")
+                .end(new JsonObject().put("ok", true).encode());
+    }
+
+    private void sendError(RoutingContext ctx, Throwable err) {
+        Log.error(err);
+        ctx.fail(500, err);
     }
 }

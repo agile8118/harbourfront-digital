@@ -12,7 +12,7 @@ public class MainVerticle extends AbstractVerticle {
 
     @Override
     public void start(Promise<Void> startPromise) {
-        int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8080"));
+        int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8081"));
 
         DB db = new DB(Database.createPool(vertx));
         SqsService sqsService = new SqsService();
@@ -21,14 +21,14 @@ public class MainVerticle extends AbstractVerticle {
         Router router = AppRouter.create(vertx, db, sqsService, sesService);
 
         vertx.createHttpServer()
-            .requestHandler(router)
-            .listen(port, result -> {
-                if (result.succeeded()) {
-                    Log.info("Server listening on port " + port);
-                    startPromise.complete();
-                } else {
-                    startPromise.fail(result.cause());
-                }
-            });
+                .requestHandler(router)
+                .listen(port, result -> {
+                    if (result.succeeded()) {
+                        Log.info("Server listening on port " + port);
+                        startPromise.complete();
+                    } else {
+                        startPromise.fail(result.cause());
+                    }
+                });
     }
 }
