@@ -2,18 +2,18 @@ package com.harbourfront.handlers;
 
 import com.harbourfront.Log;
 import com.harbourfront.database.DB;
-import com.harbourfront.services.SqsService;
+import com.harbourfront.services.SnsService;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 
 public class ContactHandler {
 
     private final DB         db;
-    private final SqsService sqsService;
+    private final SnsService snsService;
 
-    public ContactHandler(DB db, SqsService sqsService) {
+    public ContactHandler(DB db, SnsService snsService) {
         this.db         = db;
-        this.sqsService = sqsService;
+        this.snsService = snsService;
     }
 
     public void handle(RoutingContext ctx) {
@@ -43,7 +43,7 @@ public class ContactHandler {
                 .put("message",    message)
                 .put("ip_address", ip))
             .onSuccess(row -> {
-                sqsService.sendContactNotification(name, email, message)
+                snsService.sendContactNotification(name, email, message)
                     .onFailure(err -> Log.error(err));
 
                 ctx.response()

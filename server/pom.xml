@@ -57,10 +57,10 @@
       <artifactId>vertx-pg-client</artifactId>
     </dependency>
 
-    <!-- AWS SDK v2 SQS (uses IAM role credentials automatically) -->
+    <!-- AWS SDK v2 SNS (uses IAM role credentials automatically) -->
     <dependency>
       <groupId>software.amazon.awssdk</groupId>
-      <artifactId>sqs</artifactId>
+      <artifactId>sns</artifactId>
     </dependency>
 
     <!-- AWS SDK v2 SES v2 — sends transactional emails from verified domain -->

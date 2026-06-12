@@ -3,7 +3,7 @@ package com.harbourfront;
 import com.harbourfront.database.DB;
 import com.harbourfront.database.Database;
 import com.harbourfront.services.SesService;
-import com.harbourfront.services.SqsService;
+import com.harbourfront.services.SnsService;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.ext.web.Router;
@@ -12,13 +12,13 @@ public class MainVerticle extends AbstractVerticle {
 
     @Override
     public void start(Promise<Void> startPromise) {
-        int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8081"));
+        int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8080"));
 
         DB db = new DB(Database.createPool(vertx));
-        SqsService sqsService = new SqsService();
+        SnsService snsService = new SnsService();
         SesService sesService = new SesService();
 
-        Router router = AppRouter.create(vertx, db, sqsService, sesService);
+        Router router = AppRouter.create(vertx, db, snsService, sesService);
 
         vertx.createHttpServer()
                 .requestHandler(router)

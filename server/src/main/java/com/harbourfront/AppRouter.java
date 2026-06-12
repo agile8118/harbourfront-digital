@@ -6,7 +6,7 @@ import com.harbourfront.handlers.ContactHandler;
 import com.harbourfront.handlers.NewsletterHandler;
 import com.harbourfront.middleware.RequestLoggerHandler;
 import com.harbourfront.services.SesService;
-import com.harbourfront.services.SqsService;
+import com.harbourfront.services.SnsService;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
@@ -14,7 +14,7 @@ import io.vertx.ext.web.handler.StaticHandler;
 
 public class AppRouter {
 
-    public static Router create(Vertx vertx, DB db, SqsService sqsService, SesService sesService) {
+    public static Router create(Vertx vertx, DB db, SnsService snsService, SesService sesService) {
         Router router = Router.router(vertx);
 
         // Log every request before anything else runs
@@ -24,7 +24,7 @@ public class AppRouter {
         router.route("/api/*").handler(BodyHandler.create());
 
         // ── API routes ─────────────────────────────────────────────────────────
-        ContactHandler contactHandler = new ContactHandler(db, sqsService);
+        ContactHandler contactHandler = new ContactHandler(db, snsService);
         router.post("/api/contact").handler(contactHandler::handle);
 
         NewsletterHandler newsletterHandler = new NewsletterHandler(db, sesService);
