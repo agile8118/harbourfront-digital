@@ -161,6 +161,6 @@ public class DB {
     /** Rewrites $1→$(1+offset), $2→$(2+offset), … in a WHERE clause. */
     private static String shiftPlaceholders(String clause, int offset) {
         Matcher m = Pattern.compile("\\$(\\d+)").matcher(clause);
-        return m.replaceAll(r -> "$" + (Integer.parseInt(r.group(1)) + offset));
+        return m.replaceAll(r -> Matcher.quoteReplacement("$" + (Integer.parseInt(r.group(1)) + offset)));
     }
 }
