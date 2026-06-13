@@ -35,13 +35,13 @@ public class SnsService {
 
         if (client == null) {
             Log.error("SNS client failed to initialize — notification not sent for: " + email);
-            promise.complete();
+            promise.fail("SNS client failed to initialize");
             return promise.future();
         }
 
         if (topicArn == null || topicArn.isBlank()) {
             Log.error("SNS_TOPIC_ARN not configured — notification not sent for: " + email);
-            promise.complete();
+            promise.fail("SNS_TOPIC_ARN not configured");
             return promise.future();
         }
 
