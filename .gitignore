@@ -1,6 +1,7 @@
 .env
 .DS_Store
 server/target/
+server/dependency-reduced-pom.xml
 logs/
 .idea
 .vscode

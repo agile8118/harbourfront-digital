@@ -1,25 +1,29 @@
-#!/bin/bash
+#!/bin/sh
 
-# Loads environment variables then executes the given command.
-#
-#   Dev:        reads from .env file
-#   Docker:     skips (vars already injected by Docker Compose)
-#   Production: pulls from AWS SSM at /harbourfront/prod/
+# This script loads environment variables either from a local .env file (for development) 
+# or from AWS SSM (for production), and then executes the given command.
 
 if [ "${DOCKER:-false}" = "true" ]; then
-    echo "Running in Docker: environment variables already injected..."
+    echo "Running in Docker: Environment variables already injected by Docker Compose..."
 elif [ -f .env ]; then
-    echo "Loading environment variables from .env..."
+    echo "Running Locally: Loading environment variables from .env file..."
     set -a
-    source .env
+
+    # source is not available in dash, so we use . instead.
+    . ./.env
+
     set +a
 else
-    echo "Loading environment variables from AWS SSM..."
-    export $(aws ssm get-parameters-by-path \
+    # Production environment: Load from AWS
+    echo "Running in Production: Loading environment variables from AWS SSM..."
+    set -a
+    eval "$(aws ssm get-parameters-by-path \
         --path "/harbourfront/prod/" \
         --with-decryption \
-        --query "Parameters[*].[Name,Value]" \
-        --output text | awk '{print $1"="$2}' | sed 's|/harbourfront/prod/||') || exit 1
+        --output json | jq -r '.Parameters[] | (.Name | ltrimstr("/harbourfront/prod/")) + "=" + (.Value | @sh)')" || exit 1
+    set +a
 fi
 
-exec "$@"
+# take all remaining arguments and run them as a command
+exec env "$@"
+

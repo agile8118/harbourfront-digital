@@ -5,7 +5,7 @@ CMD=$1
 
 # If no command is given, show usage
 if [ -z "$CMD" ]; then
-  echo "Usage: $0 [build | run | seed]"
+  echo "Usage: $0 [build | run | start | seed]"
   exit 1
 fi
 
@@ -20,6 +20,11 @@ if [ "$CMD" == "run" ]; then
   (cd server && mvn package -q -DskipTests)
   echo "Starting server..."
   ./env.sh java -jar server/target/harbourfront-server-1.0.jar
+fi
+
+if [ "$CMD" == "start" ]; then
+  echo "Starting server with pm2..."
+  pm2 startOrReload ecosystem.config.js --update-env
 fi
 
 if [ "$CMD" == "seed" ]; then

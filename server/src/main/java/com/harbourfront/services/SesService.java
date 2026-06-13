@@ -51,10 +51,14 @@ public class SesService {
                         .build())
                 .build();
 
-        client.sendEmail(req).whenComplete((res, err) -> {
-            if (err != null) promise.fail(err);
-            else promise.complete();
-        });
+        try {
+            client.sendEmail(req).whenComplete((res, err) -> {
+                if (err != null) promise.fail(err);
+                else promise.complete();
+            });
+        } catch (Exception e) {
+            promise.fail(e);
+        }
 
         return promise.future();
     }
