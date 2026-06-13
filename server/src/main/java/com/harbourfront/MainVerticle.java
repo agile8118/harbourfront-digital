@@ -24,6 +24,7 @@ public class MainVerticle extends AbstractVerticle {
                 .requestHandler(router)
                 .listen(port, result -> {
                     if (result.succeeded()) {
+                        System.out.println("Server listening on port " + port);
                         Log.info("Server listening on port " + port);
                         startPromise.complete();
                     } else {
