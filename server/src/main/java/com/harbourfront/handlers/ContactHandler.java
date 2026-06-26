@@ -32,10 +32,16 @@ public class ContactHandler {
             return;
         }
 
+        String cfIp      = ctx.request().getHeader("cf-connecting-ip");
         String forwarded = ctx.request().getHeader("x-forwarded-for");
-        String ip = (forwarded != null && !forwarded.isBlank())
-            ? forwarded
-            : ctx.request().remoteAddress().host();
+        String ip;
+        if (cfIp != null && !cfIp.isBlank()) {
+            ip = cfIp.trim();
+        } else if (forwarded != null && !forwarded.isBlank()) {
+            ip = forwarded.split(",")[0].trim();
+        } else {
+            ip = ctx.request().remoteAddress().host();
+        }
 
         db.insert("contact_submissions", new JsonObject()
                 .put("name",       name)
