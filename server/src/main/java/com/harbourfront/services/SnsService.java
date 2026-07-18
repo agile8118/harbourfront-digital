@@ -33,6 +33,12 @@ public class SnsService {
     public Future<Void> sendContactNotification(String name, String email, String message) {
         Promise<Void> promise = Promise.promise();
 
+        if ("true".equals(System.getenv("SKIP_SNS"))) {
+            Log.info("SKIP_SNS=true — notification not sent for: " + email);
+            promise.complete();
+            return promise.future();
+        }
+
         if (client == null) {
             Log.error("SNS client failed to initialize — notification not sent for: " + email);
             promise.fail("SNS client failed to initialize");

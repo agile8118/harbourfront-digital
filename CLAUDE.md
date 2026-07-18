@@ -23,6 +23,8 @@ All commands are run from the repo root.
 - `node stressor/contacts.mjs --url <base-url> [--connections N] [--duration S] [--rate R]` — hammers `POST /api/contact` with generated names/emails/messages.
 - `node stressor/page-load.mjs` — load-tests static page loads.
 
+**Before stress-testing any deployed instance**, set `SKIP_SNS=true` (and `SKIP_SES=true` if newsletter endpoints are ever included) in that instance's env config. `contacts.mjs` triggers a real SNS publish per request via `SnsService`, which forwards to the owner's real subscribed email — without the skip flag this floods their inbox and writes fake rows into `contact_submissions`. Unset the flags again afterward so real production traffic isn't silently skipped.
+
 ## Architecture
 
 **Stack**: Java 17, Vert.x 4.5 (core + web + reactive Postgres client), AWS SDK v2 (SNS + SES v2), Maven shade plugin for a fat jar. No ORM — raw SQL via `DB.java`.

@@ -1,5 +1,6 @@
 package com.harbourfront.services;
 
+import com.harbourfront.Log;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import software.amazon.awssdk.auth.credentials.InstanceProfileCredentialsProvider;
@@ -25,6 +26,13 @@ public class SesService {
 
     public Future<Void> sendConfirmation(String toEmail, String token) {
         Promise<Void> promise = Promise.promise();
+
+        if ("true".equals(System.getenv("SKIP_SES"))) {
+            Log.info("SKIP_SES=true — confirmation email not sent for: " + toEmail);
+            promise.complete();
+            return promise.future();
+        }
+
         String confirmUrl = appBaseUrl + "/api/newsletter/confirm?token=" + token;
 
         String html = "<div style=\"font-family:sans-serif;max-width:100%;margin:0 auto;"

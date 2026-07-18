@@ -5,3 +5,4 @@ server/dependency-reduced-pom.xml
 logs/
 .idea
 .vscode
+node_modules/

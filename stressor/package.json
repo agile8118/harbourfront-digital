@@ -1,0 +1,13 @@
+{
+  "name": "harbourfront-stressor",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "bench:contacts": "node contacts.mjs --url http://localhost:3060 --connections 10 --duration 30 --rate 50",
+    "bench:page-load": "node page-load.mjs --url http://localhost:3060 --connections 10 --duration 30 --rate 50"
+  },
+  "dependencies": {
+    "autocannon": "^7.15.0"
+  }
+}
